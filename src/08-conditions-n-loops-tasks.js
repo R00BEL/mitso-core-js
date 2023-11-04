@@ -173,15 +173,26 @@ function isInsideCircle(circle, point) {
  * Returns the first non repeated char in the specified strings otherwise returns null.
  *
  * @param {string} str
- * @return {string}
+ * @return {string|null}
  *
  * @example:
  *   'The quick brown fox jumps over the lazy dog' => 'T'
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const frequency = {};
+  str.split('')
+    .forEach((char) => {
+      frequency[char] = (frequency[char] || 0) + 1;
+    });
+  const entries = Object.entries(frequency);
+  for (let i = 0; i < entries.length; i += 1) {
+    if (entries[i][1] === 1) {
+      return entries[i][0];
+    }
+  }
+  return null;
 }
 
 /**
