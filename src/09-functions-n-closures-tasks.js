@@ -85,7 +85,7 @@ function getPolynom(...coefficients) {
 function memoize(func) {
   const cache = {};
   return (...args) => {
-    const n = args[0]; // just one argument is used for simplicity
+    const n = args[0];
     if (n in cache) {
       return cache[n];
     }
@@ -111,8 +111,19 @@ function memoize(func) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return (...args) => {
+    let lastError;
+    for (let i = 0; i < attempts; i += 1) {
+      try {
+        return func(...args);
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError;
+  };
 }
 
 /**
